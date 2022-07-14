@@ -1,0 +1,3 @@
+select job, description, salary, qualification
+from job_bank
+where skill == skill and experience == experience

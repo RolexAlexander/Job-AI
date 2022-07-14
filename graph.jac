@@ -39,22 +39,22 @@ graph main_graph {
 
     spawn{
     main_root = spawn node::state(Intro = "Welcome to our Job Recruiter. Enter resume to go to our resume builder, interview to go to our inter view section, document help to go to our document help section, or career to go to our job and internship bank.");
-    resume = spawn main_root -[transition(intent="resume")]-> node::state (Intro= "Resume Builder", promp= "Welcome to our Resume Builder. Enter HELLO to Continue");
-    career = spawn main_root -[transition(intent="career")]-> node::state (Intro= "Welcome to our Internships and job bank", promp= "ddfndufbdbu");
-    closing_home = spawn resume -[transition(intent="closing")]-> node::state (Intro="Closing Home", promp="Goodbye");
-    internship_list = spawn career -[transition(intent="Internship" or "internship")]-> node::state (promp= "Here is a list of suitable Internships");
-    Jobs = spawn career -[transition(intent="Job" or "Jobs" or "job")]-> node::state(promp= "Welcome to our job bank. Here is a list of suitable Jobs");
-    apply_now = spawn internship_list -[transition(intent="Apply" or "apply" or "Apply Now")]-> node::state(promp= "Do you want to apply to all the recommended Internships");
+    resume = spawn main_root -[transition(intent="resume")]-> node::state (title= "Resume Builder", intro= "Welcome to our Resume Builder. Enter HELLO to Continue");
+    career = spawn main_root -[transition(intent="career")]-> node::state (Intro= "Welcome to our Internships and job bank");
+    closing_home = spawn resume -[transition(intent="closing")]-> node::state (title="Closing Home", intro="Thank you for visiting our Job Recruiter");
+    Internship_list = spawn career -[transition(intent="Internship" or "internship")]-> node::state (internship_list= "Here is a list of available Internships");
+    Jobs = spawn career -[transition(intent="Job" or "Jobs" or "job")]-> node::state(Jobs= "Welcome to our job bank. Here is a list of suitable Jobs");
+    apply_now = spawn Internship_list -[transition(intent="Apply" or "apply" or "Apply Now")]-> node::state(question= "Do you want to apply to all the recommended Internships");
     Jobs -[transition(intent="Apply" or "apply" or "Apply Now")]-> apply_now;
-    title = spawn resume -[transition(intent="Personal Information" or "personal info")]-> node::state (title= "Personal Information");
+    title = spawn resume -[transition(intent="Personal Information" or "personal info")]-> node::state (title= "Personal Information", name= "Enter your Name", address= "Enter your Current Address", telephone_number= "Enter your telephone number", gmail= "Enter your email address");
     short_sentence = spawn title -[transition(intent="short sentence" or "goal")]-> node::state(title= "In one short sentence summarize your goal for your job search. The goal should be related to the specific position for which you are applying. It is also effective to highlight your skills in the goal statement.");
-    High_School_Name = spawn short_sentence -[transition(intent="school info")]-> node::state(title= "What is the name of your Alma mater");
+    High_School_Name = spawn short_sentence -[transition(intent="school info")]-> node::state(title= "What is the name of your Alma mater", location= "Where is your School Located", Date_of_graduation= "What date did you graduate School", education_system= "What educational system did you undertake. (GCE, CSEC, A levels, CAPE, Vocational Studies, University Degree)", Course_highlight= "What courses did you take and the grade received for each", certificates= "What certificates did you receive");
     experience = spawn High_School_Name -[transition(intent="experience" or "Experience")]-> node::state(title= "What experience do you have in the field.(This could include Summer jobs, Internships, Volunteer work). Please include position title, company/organization, city/state, dates and a brief list of the job duties.");
     award = spawn experience -[transition(intent="award" or "awards")]-> node::state(title= "List the awards you have received. These awards or Honors could include Academic, musical, athletic and or other recognition. (Include name of the award/honor, who awarded it, and when it was awarded.)");
     activities_hobbies = spawn award -[transition(intent="activities" or "Hobbies")]-> node::state(title= "List your activities and Hobbies.");
     skills = spawn activities_hobbies -[transition(intent="skills" or "skill")]-> node::state(title= "What are your skills.");
     reference = spawn skills -[transition(intent="reference")]-> node::state(title= "List your reference. These can include Teacher/Professor Work supervisor (current or past) Character reference (Pastor, Headmaster, youth group leader or someone who knows you well) Include the name, relationship to you, organization, contact phone numbers.");
-    Finished_resume = spawn reference -[transition(intent="Finished resume" or "resume")]-> node::state(title= "Here is your finished resume.");
+    Finished_resume = spawn reference -[transition(intent="Finished resume" or "resume")]-> node::state(intro= "Here is your finished resume.");
     suitable_careers = spawn Finished_resume -[transition(intent="Suitable Careers" or "careers")]-> node::state(title =" Here is a List of suitable carriers");
     suitable_careers -[transition(intent="Apply now")]-> apply_now;
     interview = spawn main_root -[transition(intent="interview")]-> node::state(Intro="Welcome to our interview Section. Enter ready to initiate your interview");
